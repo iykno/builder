@@ -1,0 +1,36 @@
+1、启动：
+ModelingInitializer.init方法启动
+如在：ApplicationStartup.java监听中加  ModelingInitializer.init(event.getApplicationContext().getBean(ModelingLoader.class));
+
+2、使用：
+①查询
+URL:http://127.0.0.1:28080/modeling/search
+mothod:post
+params:
+{	
+	"pageNo": 1,
+	"pageSize": 10,
+	"topic": "testTopic",   说明：对应XML的topic
+	"conditionList": [{
+		"condition": "one.num",  说明：alarm对应XML的table的jsonKey值，num对应的表字段名
+		"conditionVal": "1"
+	}
+	],
+	"orderByList": [{     说明：支持多个
+		"orderBy": "one.account_time",
+		"desc": "DESC"
+	}]
+}
+
+
+②刷新
+URL:http://127.0.0.1:28080/modeling/reload
+mothod:post
+params:
+{	
+
+	"topic": "testTopic",
+	"mainColumnVals": [
+	],
+	"jsonKeys": ["one"]
+}

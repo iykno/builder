@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<modeling>
+	<!-- 主题维度 -->
+	<topic>testTopic</topic>
+	<!-- 主表 -->
+	<mainTable>tb_org</mainTable>
+	<!-- 主表关联字段，一定要和表中对应，区分大小写 -->
+	<mainColumn>org_id</mainColumn>
+	<!-- 单位秒 -->
+	<period>1800</period>
+	<!-- 附属从表 -->
+	<tables>
+		<table>
+			<!-- 生成json的key -->
+			<jsonKey>one</jsonKey>
+			<!-- 数据来源表initType=0时 必填  -->
+			<slaveTable>tb_account_one</slaveTable>
+			<!-- 如果为空  默认为rootjsonKey:org_id -->
+			<mappingColumn></mappingColumn>
+			<!-- 0:通用模式,eg: select * from #slaveTable   1：自定义sql模式 -->
+			<initType>0</initType>
+			<sql></sql>
+		</table>
+		<table>
+			<jsonKey>two</jsonKey>
+			<slaveTable>tb_account_two</slaveTable>
+			<mappingColumn>org_id</mappingColumn>
+			<initType>1</initType>
+			<sql>
+				<select>
+					<![CDATA[
+						SELECT 
+						  org_id AS org_id,
+						  num AS num,
+						  account_time AS account_time 
+						FROM
+						  tb_account_two 
+					]]>
+				</select>
+				<where>
+				</where>
+				<other>
+						order by num desc limit 10
+				</other>
+			</sql>
+		</table>
+		
+	</tables>
+</modeling>
+
